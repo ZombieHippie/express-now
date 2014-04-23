@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 
 var DataStore = require('./lib/jsonStore')
-var dataStore = new DataStore()
-var routes = require('./routes/index')(dataStore)
-var users = require('./routes/users')(dataStore)
+var db = new DataStore()
+var routes = require('./routes/index')(db)
+var users = require('./routes/users')(db)
 
 var app = express()
 
@@ -25,6 +25,14 @@ app.use(cookieParser())
 app.use(require('stylus').middleware(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'public')))
 
+// track site page loads
+app.use(function(req, res, next) {
+	db.get('page-views', function(err, views) {
+		var newViews = parseInt(views || 0) + 1
+		req.siteViews = newViews
+		db.set('page-views', newViews, next)
+	})
+})
 app.use('/', routes)
 app.use('/users', users)
 
