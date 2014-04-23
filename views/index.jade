@@ -5,5 +5,9 @@ block content
 		h1 ZombieHippie
 		em a variety blog
 	.row
+		if articles
+			for article in articles
+				.col-xs-3
+					strong=article
 	.row
 		span.text-center=pageViews

@@ -7,6 +7,10 @@ var bodyParser = require('body-parser')
 
 var DataStore = require('./lib/jsonStore')
 var db = new DataStore()
+
+// populate articles
+db.set("articles", ["cows-milk","farmers-hand","century-dealer"])
+
 var routes = require('./routes/index')(db)
 var users = require('./routes/users')(db)
 
