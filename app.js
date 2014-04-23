@@ -7,7 +7,6 @@ var bodyParser = require('body-parser')
 
 var DataStore = require('./lib/jsonStore')
 var dataStore = new DataStore()
-dataStore.set('projects', {free:1})
 var routes = require('./routes/index')(dataStore)
 var users = require('./routes/users')(dataStore)
 
